@@ -14,10 +14,10 @@ defmodule WermTest do
 
   describe ".get_seller_id/1" do
     test "returns the seller id" do
-      item = [{"div", [{"class", "ep-A"}], ["DummySeller"]}]
-      item_html = {"div", [], item}
+      seller_id = {"div", [{"class", "ep-A"}], ["DummySeller"]}
+      item = {"div", [], [seller_id]}
 
-      assert Werm.get_seller_id(item_html) == "DummySeller"
+      assert Werm.get_seller_id(item) == "DummySeller"
     end
   end
 
@@ -27,19 +27,19 @@ defmodule WermTest do
       desc = {"div", [], ["Description"]}
       state = {"div", [], ["Used"]}
 
-      item = [{"div", [{"class", "ep-k"}], [price, desc, state]}]
-      item_html = {"div", [], item}
+      context = {"div", [{"class", "ep-k"}], [price, desc, state]}
+      item = {"div", [], [context]}
 
-      assert Werm.get_item_context(item_html) == ["$10", "Description", "Used"]
+      assert Werm.get_item_context(item) == ["$10", "Description", "Used"]
     end
   end
 
   describe ".get_item_link/1" do
     test "returns the item link" do
-      item = [{"a", [{"class", "ep-ab"}, {"href", "https://item-link"}], []}]
-      item_html = {"div", [], item}
+      link = {"a", [{"class", "ep-ab"}, {"href", "https://item-link"}], []}
+      item = {"div", [], [link]}
 
-      assert Werm.get_item_link(item_html) == "https://item-link"
+      assert Werm.get_item_link(item) == "https://item-link"
     end
   end
 end
