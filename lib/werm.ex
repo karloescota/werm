@@ -6,6 +6,7 @@ defmodule Werm do
       {:ok, %HTTPoison.Response{body: html}} ->
         html
         |> get_items()
+        |> to_struct()
 
       {:error, %HTTPoison.Error{reason: reason}} ->
         IO.inspect(reason)
@@ -30,5 +31,21 @@ defmodule Werm do
     Floki.find(item, "a.ep-ab")
     |> Floki.attribute("href")
     |> List.first()
+  end
+
+  def to_struct(items) do
+    Enum.map(items, fn item ->
+      seller_id = get_seller_id(item)
+      [price, desc, state] = get_item_context(item)
+      link = get_item_link(item)
+
+      %{
+        seller_id: seller_id,
+        price: price,
+        description: desc,
+        state: state,
+        link: link
+      }
+    end)
   end
 end

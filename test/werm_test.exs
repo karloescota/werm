@@ -32,6 +32,18 @@ defmodule WermTest do
     end
   end
 
+  describe ".to_struct/1" do
+    test "returns the list of item structs" do
+      item1 = item("Seller1", "https://link-1", ["$10", "Test1", "Used"])
+      item2 = item("Seller2", "https://link-2", ["$20", "Test2", "New"])
+
+      assert Werm.to_struct([item1, item2]) == [
+        %{seller_id: "Seller1", price: "$10", link: "https://link-1", description: "Test1", state: "Used"},
+        %{seller_id: "Seller2", price: "$20", link: "https://link-2", description: "Test2", state: "New"}
+      ]
+    end
+  end
+
   def seller_id(id) do
     {"div", [{"class", "ep-A"}], [id]}
   end
@@ -46,5 +58,13 @@ defmodule WermTest do
 
   def context(price, desc, state) do
     {"div", [{"class", "ep-k"}], [div(price), div(desc), div(state)]}
+  end
+
+  def item(id, ref, [price, desc, state]) do
+    {"div", [], [
+      seller_id(id),
+      context(price, desc, state),
+      link(ref)
+    ]}
   end
 end
