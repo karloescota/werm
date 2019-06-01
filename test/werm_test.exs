@@ -33,4 +33,13 @@ defmodule WermTest do
       assert Werm.get_item_context(item_html) == ["$10", "Description", "Used"]
     end
   end
+
+  describe ".get_item_link/1" do
+    test "returns the item link" do
+      item = [{"a", [{"class", "ep-ab"}, {"href", "https://item-link"}], []}]
+      item_html = {"div", [], item}
+
+      assert Werm.get_item_link(item_html) == "https://item-link"
+    end
+  end
 end

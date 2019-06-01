@@ -25,4 +25,10 @@ defmodule Werm do
     {_, _, context} = Floki.find(item, "div.ep-k") |> List.first()
     Enum.map(context, &(&1 |> Floki.text()))
   end
+
+  def get_item_link(item) do
+    Floki.find(item, "a.ep-ab")
+    |> Floki.attribute("href")
+    |> List.first()
+  end
 end
